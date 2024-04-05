@@ -1,11 +1,11 @@
 import { Box, Flex, Link, Avatar, Tooltip } from "@chakra-ui/react";
 import { Link as RouterLink } from "react-router-dom";
-import { InstagramLogo } from "../../assets/constants";
 import {
   InstagramMobileLogo,
   CreatePostLogo,
   SearchLogo,
   NotificationsLogo,
+  InstagramLogo,
 } from "../../assets/constants";
 import { AiFillHome } from "react-icons/ai";
 import { BiLogOut } from "react-icons/bi";
@@ -22,6 +22,7 @@ function Sidebar() {
       link: "/umeshsingadi",
     },
   ];
+
   return (
     <Box
       h="100vh"
@@ -31,7 +32,7 @@ function Sidebar() {
       position={"sticky"}
       top={0}
       left={0}
-      px={{ base: 2, d: 4 }}>
+      px={{ base: 2, md: 4 }}>
       <Flex direction={"column"} gap={10} w={"full"} h={"full"}>
         <Link
           top={"/"}
