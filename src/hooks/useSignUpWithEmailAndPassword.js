@@ -1,7 +1,13 @@
-import { auth } from "../firebase/firebase";
+import { auth, firestore } from "../firebase/firebase";
 import { useCreateUserWithEmailAndPassword } from "react-firebase-hooks/auth";
-import { setDoc, doc } from "firebase/firestore";
-import { firestore } from "../firebase/firebase";
+import {
+  setDoc,
+  doc,
+  collection,
+  query,
+  where,
+  getDocs,
+} from "firebase/firestore";
 import useShowToast from "./useShowToast";
 import useAuthStore from "../store/authStore";
 
@@ -19,6 +25,16 @@ function useSignUpWithEmailAndPassword() {
       !inputs.userName
     ) {
       showToast("Error", "Please fill all the fields", "error");
+      return;
+    }
+    const usersRef = collection(firestore, "users");
+
+    const q = query(usersRef, where("userName", "==", inputs.userName));
+
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      showToast("Error", "User already exists", "error");
       return;
     }
     try {
