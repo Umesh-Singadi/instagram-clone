@@ -6,8 +6,16 @@ import {
   Text,
   VStack,
 } from "@chakra-ui/react";
+import useUserProfileStore from "../../store/userProfileStore";
+import useAuthStore from "../../store/authStore";
 
 function ProfileHeader() {
+  const { userProfile } = useUserProfileStore();
+  const authUser = useAuthStore((state) => state.user);
+  const visitingOwnProfileAndAuth =
+    authUser && authUser.userName === userProfile.userName;
+  const visitingAnotherProfileAndAuth =
+    authUser && authUser.userName !== userProfile.userName;
   return (
     <Flex
       gap={{ base: 4, sm: 10 }}
@@ -18,7 +26,7 @@ function ProfileHeader() {
         justifySelf={"center"}
         alignSelf={"flex-start"}
         mx={"auto"}>
-        <Avatar name="umesh" src="profile-pic.png" alt="profile pic" />
+        <Avatar src={userProfile.profilePicURL} alt="profile pic" />
       </AvatarGroup>
       <VStack alignItems={"start"} gap={2} mx={"auto"} flex={1}>
         <Flex
@@ -26,16 +34,31 @@ function ProfileHeader() {
           direction={{ base: "column", sm: "row" }}
           justify={"start"}
           w={"full"}>
-          <Text fontSize={{ base: "sm", md: "lg" }}>Umesh</Text>
-          <Flex gap={4} align={"center"} justify={"center"}>
-            <Button
-              bg={"white"}
-              color={"black"}
-              _hover={{ bg: "whiteAlpha.800" }}
-              size={{ base: "xs", md: "sm" }}>
-              Edit Profile
-            </Button>
-          </Flex>
+          <Text fontSize={{ base: "sm", md: "lg" }}>
+            {userProfile.userName}
+          </Text>
+          {visitingOwnProfileAndAuth && (
+            <Flex gap={4} align={"center"} justify={"center"}>
+              <Button
+                bg={"white"}
+                color={"black"}
+                _hover={{ bg: "whiteAlpha.800" }}
+                size={{ base: "xs", md: "sm" }}>
+                Edit Profile
+              </Button>
+            </Flex>
+          )}
+          {visitingAnotherProfileAndAuth && (
+            <Flex gap={4} align={"center"} justify={"center"}>
+              <Button
+                bg={"blue.500"}
+                color={"white"}
+                _hover={{ bg: "blue.600" }}
+                size={{ base: "xs", md: "sm" }}>
+                Follow
+              </Button>
+            </Flex>
+          )}
         </Flex>
         <Flex align={"center"} gap={{ base: 2, sm: "4" }}>
           <Text>
@@ -44,7 +67,7 @@ function ProfileHeader() {
               as={"span"}
               fontWeight={"bold"}
               mr={1}>
-              100
+              {userProfile.posts.length}
             </Text>
             Posts
           </Text>
@@ -54,7 +77,7 @@ function ProfileHeader() {
               as={"span"}
               fontWeight={"bold"}
               mr={1}>
-              765
+              {userProfile.followers.length}
             </Text>
             Followers
           </Text>
@@ -64,17 +87,17 @@ function ProfileHeader() {
               as={"span"}
               fontWeight={"bold"}
               mr={1}>
-              876
+              {userProfile.following.length}
             </Text>
             Following
           </Text>
         </Flex>
         <Flex align={"center"} gap={4}>
           <Text fontSize={"sm"} fontWeight={"bold"}>
-            Umesh Singadi
+            {userProfile.fullName}
           </Text>
         </Flex>
-        <Text fontSize={"sm"}> Instagram Clone</Text>
+        <Text fontSize={"sm"}>{userProfile.bio}</Text>
       </VStack>
     </Flex>
   );
