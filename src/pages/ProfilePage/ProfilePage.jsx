@@ -74,7 +74,7 @@ function UserNotFound() {
       <Text fontSize={"2xl"}>User not Found</Text>
       <Link
         as={RouterLink}
-        top={"/"}
+        to={"/"}
         mx={"auto"}
         w={"max-content"}
         color={"blue.500"}>
