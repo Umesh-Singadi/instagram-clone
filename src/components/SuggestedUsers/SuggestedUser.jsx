@@ -15,33 +15,35 @@ function SuggestedUser({ user, setUser }) {
     });
   };
   return (
-    <Flex w={"full"} alignItems={"center"} justifyContent={"space-between"}>
-      <Flex>
-        <Avatar src={user.profilePicURL} size={"md"} mr={2} />
-        <VStack gap={0} alignItems={"flex-start"}>
-          <Box fontSize={20} fontWeight={"bold"}>
-            {user.userName}
-          </Box>
-          <Box fontSize={"12"} color={"gray.500"}>
-            {user.followers.length} followers
-          </Box>
-        </VStack>
+    <>
+      <Flex w={"full"} alignItems={"center"} justifyContent={"space-between"}>
+        <Flex>
+          <Avatar src={user.profilePicURL} size={"md"} mr={2} />
+          <VStack gap={0} alignItems={"flex-start"}>
+            <Box fontSize={20} fontWeight={"bold"}>
+              {user.userName}
+            </Box>
+            <Box fontSize={"12"} color={"gray.500"}>
+              {user.followers.length} followers
+            </Box>
+          </VStack>
+        </Flex>
+        {authUser.uid !== user.uid && (
+          <Button
+            color={"blue.400"}
+            fontWeight={"medium"}
+            fontSize={14}
+            bg={"transparent"}
+            p={0}
+            _hover={{ color: "white" }}
+            cursor={"pointer"}
+            onClick={handleFollowClick}
+            isLoading={isUpdating}>
+            {isFollowing ? "UnFollow" : "Follow"}
+          </Button>
+        )}
       </Flex>
-      {authUser.uid !== user.uid && (
-        <Button
-          color={"blue.400"}
-          fontWeight={"medium"}
-          fontSize={14}
-          bg={"transparent"}
-          p={0}
-          _hover={{ color: "white" }}
-          cursor={"pointer"}
-          onClick={handleFollowClick}
-          isLoading={isUpdating}>
-          {isFollowing ? "UnFollow" : "Follow"}
-        </Button>
-      )}
-    </Flex>
+    </>
   );
 }
 
