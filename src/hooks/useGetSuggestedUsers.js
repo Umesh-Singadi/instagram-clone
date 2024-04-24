@@ -12,25 +12,24 @@ import {
 import { firestore } from "../firebase/firebase";
 
 function useGetSuggestedUsers() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [suggestedUsers, setSuggestedUsers] = useState([]);
   const showToast = useShowToast();
   const authUser = useAuthStore((state) => state.user);
 
   useEffect(() => {
-    const getSuggestedUser = async () => {
+    const getSuggestedUsers = async () => {
       setIsLoading(true);
       try {
-        const userRef = collection(firestore, "users");
         const q = query(
-          userRef,
-          where("uid", "not-in", [authUser.uid, ...authUser.following]),
+          collection(firestore, "users"),
+          where("uid", "not-in", [authUser.uid, ...authUser.following]), //
           orderBy("uid"),
           limit(4)
         );
-
         const querySnapshot = await getDocs(q);
         const users = [];
+
         querySnapshot.forEach((doc) => {
           users.push({ ...doc.data(), id: doc.id });
         });
@@ -41,7 +40,7 @@ function useGetSuggestedUsers() {
         setIsLoading(false);
       }
     };
-    if (authUser) getSuggestedUser();
+    if (authUser) getSuggestedUsers();
   }, [authUser, showToast]);
   return { isLoading, suggestedUsers };
 }

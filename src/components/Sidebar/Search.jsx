@@ -21,12 +21,13 @@ import SuggestedUser from "../SuggestedUsers/SuggestedUser";
 
 function Search() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { getUserProfile, isLoading, setUser, user } = useSearchUser();
+  const { getUSerProfile, isLoading, user, setUser } = useSearchUser();
   const searchRef = useRef(null);
 
-  const handleSubmit = (e) => {
+  const handleSearchUser = (e) => {
     e.preventDefault();
-    getUserProfile(searchRef.current.value);
+    getUSerProfile(searchRef.current.value);
+    setUser(null);
   };
   return (
     <>
@@ -50,23 +51,24 @@ function Search() {
           <Box display={{ base: "none", md: "block" }}>Search</Box>
         </Flex>
       </Tooltip>
+
       <Modal isOpen={isOpen} onClose={onClose} motionPreset="slideInLeft">
         <ModalOverlay />
-        <ModalContent bg={"black"} w={"full"} p={4} border={"1px solid gray"}>
+        <ModalContent bg={"black"} border={"1px solid gray"} maxW={"400px"}>
           <ModalHeader>Search user</ModalHeader>
           <ModalCloseButton />
           <ModalBody pb={6}>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSearchUser}>
               <FormControl>
-                <FormLabel>User name</FormLabel>
-                <Input placeholder="Search user..." ref={searchRef} />
+                <FormLabel>Search user</FormLabel>
+                <Input placeholder="Search for user.." ref={searchRef} />
               </FormControl>
-              <Flex w={"full"} justify={"flex-end"}>
+              <Flex w={"full"} justify={"end"}>
                 <Button
                   type="submit"
                   size={"sm"}
-                  my={4}
                   ml={"auto"}
+                  my={4}
                   isLoading={isLoading}>
                   Search
                 </Button>

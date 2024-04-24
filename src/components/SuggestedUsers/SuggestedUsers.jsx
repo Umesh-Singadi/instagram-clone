@@ -13,6 +13,7 @@ import useGetSuggestedUsers from "../../hooks/useGetSuggestedUsers";
 
 function SuggestedUsers() {
   const { isLoading, suggestedUsers } = useGetSuggestedUsers();
+
   return (
     <VStack p={8} gap={4} px={6}>
       <SuggestedHeader />
@@ -30,7 +31,7 @@ function SuggestedUsers() {
           </Text>
         </Flex>
       )}
-      {}
+
       {isLoading ? (
         <Flex w={"full"} h={"full"}>
           <SkeletonCircle size={14} mr={4} />
@@ -40,10 +41,11 @@ function SuggestedUsers() {
           </Stack>
         </Flex>
       ) : (
-        suggestedUsers.map((user) => {
-          return <SuggestedUser user={user} key={user.id} />;
-        })
+        suggestedUsers.map((user) => (
+          <SuggestedUser key={user.id} user={user} />
+        ))
       )}
+
       <Text fontSize={12} color={"gray.400"} mr={"auto"}>
         &copy; @2024 Build By{" "}
         <Link
