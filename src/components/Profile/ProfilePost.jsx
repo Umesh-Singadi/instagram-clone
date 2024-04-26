@@ -42,11 +42,6 @@ function ProfilePost({ post }) {
     if (isDeleting) return;
     setIsDeleting(true);
     try {
-      // const imageRef = ref(storage, `posts/${post.id}`);
-      // await deleteObject(imageRef);
-      // await deleteDoc(doc(firestore, "posts", post.id));
-      // const userRef = doc(firestore, "users", authUser.uid);
-      // await updateDoc(userRef, { posts: arrayRemove(post.id) });
       await deleteObject(ref(storage, `posts/${post.id}`));
       await deleteDoc(doc(firestore, "posts", post.id));
       await updateDoc(doc(firestore, "users", authUser.uid), {
@@ -170,21 +165,12 @@ function ProfilePost({ post }) {
                   alignItems={"start"}
                   maxH={"350px"}
                   overflowY={"auto"}>
-                  <Comment
-                    createdAt="1 day ago"
-                    username="Umesh"
-                    profilePic="/img1.png"
-                    text="Nice pic"
-                  />
-                  <Comment
-                    createdAt="6 days ago"
-                    username="kentdodds"
-                    profilePic="https://bit.ly/kent-c-dodds"
-                    text="Nice"
-                  />
+                  {post.comments.map((comment) => (
+                    <Comment comment={comment} key={comment.id} />
+                  ))}
                 </VStack>
                 <Divider my={4} bg={"gray.800"} />
-                <PostFooter isProfilePage />
+                <PostFooter isProfilePage post={post} />
               </Flex>
             </Flex>
           </ModalBody>
