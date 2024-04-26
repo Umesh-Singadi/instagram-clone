@@ -12,7 +12,7 @@ import {
   CommentLogo,
   UnlikeLogo,
 } from "../../assets/constants";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
 
@@ -22,7 +22,7 @@ function PostFooter({ userName, isProfilePage, post }) {
   const [comment, setComment] = useState("");
   const [liked, setLiked] = useState(false);
   const [likes, setLikes] = useState(1000);
-
+  const commentRef = useRef(null);
   const handleSubmitComment = async () => {
     await handlePostComment(post.id, comment);
     setComment("");
@@ -43,7 +43,10 @@ function PostFooter({ userName, isProfilePage, post }) {
         <Box onClick={handleLikes} cursor={"pointer"} fontSize={18}>
           {!liked ? <NotificationsLogo /> : <UnlikeLogo />}
         </Box>
-        <Box cursor={"pointer"} fontSize={18}>
+        <Box
+          cursor={"pointer"}
+          fontSize={18}
+          onClick={() => commentRef.current.focus()}>
           <CommentLogo />
         </Box>
       </Flex>
@@ -70,6 +73,7 @@ function PostFooter({ userName, isProfilePage, post }) {
               fontSize={14}
               value={comment}
               onChange={(e) => setComment(e.target.value)}
+              ref={commentRef}
             />
             <InputRightElement>
               <Button
