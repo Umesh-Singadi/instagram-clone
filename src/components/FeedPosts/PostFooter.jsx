@@ -16,13 +16,14 @@ import { useRef, useState } from "react";
 import usePostComment from "../../hooks/usePostComment";
 import useAuthStore from "../../store/authStore";
 import useLikePost from "../../hooks/useLikePost";
+import { timeAgo } from "../../utils/timeAgo";
 
-function PostFooter({ userName, isProfilePage, post }) {
+function PostFooter({ isProfilePage, post, creatorProfile }) {
   const { handlePostComment, isCommenting } = usePostComment();
   const authUser = useAuthStore((state) => state.user);
   const [comment, setComment] = useState("");
   const { handleLikePost, isLiked, likes } = useLikePost(post);
-  console.log(likes);
+
   const commentRef = useRef(null);
   const handleSubmitComment = async () => {
     await handlePostComment(post.id, comment);
@@ -43,17 +44,24 @@ function PostFooter({ userName, isProfilePage, post }) {
         </Box>
       </Flex>
       <Text fontWeight={600}>{likes} likes</Text>
+      {isProfilePage && (
+        <Text fontSize={12} color={"gray"}>
+          {timeAgo(post.createdAt)}
+        </Text>
+      )}
       {!isProfilePage && (
         <>
           <Text fontWeight={700} fontSize="sm">
-            {userName}{" "}
+            {creatorProfile?.userName}{" "}
             <Text as="span" fontWeight={400}>
-              Feeling Good
+              {post.caption}
             </Text>
           </Text>
-          <Text fontSize={"sm"} color={"gray"}>
-            View all 1000 comments
-          </Text>
+          {post.comments.length > 0 && (
+            <Text fontSize={"sm"} color={"gray"} cursor={"pointer"}>
+              View all {post.comments.length} comments
+            </Text>
+          )}
         </>
       )}
       {authUser && (
