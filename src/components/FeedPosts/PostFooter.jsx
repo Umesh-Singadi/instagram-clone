@@ -46,7 +46,7 @@ function PostFooter({ isProfilePage, post, creatorProfile }) {
       <Text fontWeight={600}>{likes} likes</Text>
       {isProfilePage && (
         <Text fontSize={12} color={"gray"}>
-          {timeAgo(post.createdAt)}
+          Posted {timeAgo(post.createdAt)}
         </Text>
       )}
       {!isProfilePage && (

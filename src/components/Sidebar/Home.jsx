@@ -22,7 +22,7 @@ function Home() {
         p={2}
         w={{ base: 10, md: "full" }}
         justifyContent={{ base: "center", md: "flex-start" }}>
-        {<AiFillHome size={25} />}
+        <AiFillHome size={24} />
         <Box display={{ base: "none", md: "block" }}>Home</Box>
       </Link>
     </Tooltip>

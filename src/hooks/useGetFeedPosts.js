@@ -31,7 +31,7 @@ function useGetFeedPosts() {
         querySnapShot.forEach((doc) => {
           return feedPosts.push({ id: doc.id, ...doc.data() });
         });
-        feedPosts.sort((a, b) => b.createdBy - a.createdBy);
+        feedPosts.sort((a, b) => b.createdAt - a.createdAt);
         setPosts(feedPosts);
       } catch (error) {
         showToast("Error", error.message, "error");
