@@ -31,7 +31,6 @@ function PostFooter({ isProfilePage, post, creatorProfile }) {
     await handlePostComment(post.id, comment);
     setComment("");
   };
-
   return (
     <Box mb={10} mt={"auto"}>
       <Flex align={"center"} gap={2} w={"full"} mb={2} mt={4} pt={0}>

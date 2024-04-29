@@ -1,6 +1,7 @@
 import { Box, Flex, Grid, Skeleton, Text, VStack } from "@chakra-ui/react";
 import ProfilePost from "./ProfilePost";
 import useGetUserPosts from "../../hooks/useGetUsesPosts";
+
 function ProfilePosts() {
   const { isLoading, posts } = useGetUserPosts();
   let noPostsFound = !isLoading && posts.length === 0;

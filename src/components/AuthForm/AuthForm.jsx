@@ -6,7 +6,6 @@ import GoogleAuth from "./GoogleAuth";
 
 function AuthForm() {
   const [isLogin, setIsLogin] = useState(true);
-
   return (
     <>
       <Box border={"1px solid gray"} borderRadius={8} p={5}>

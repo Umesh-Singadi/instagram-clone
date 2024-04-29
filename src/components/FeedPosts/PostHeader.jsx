@@ -9,6 +9,7 @@ import {
 import { timeAgo } from "../../utils/timeAgo";
 import { Link } from "react-router-dom";
 import useFollowUser from "../../hooks/useFollowUser";
+
 function PostHeader({ post, creatorProfile }) {
   const { handleFollowUser, isFollowing, isUpdating } = useFollowUser(
     post.createdBy

@@ -32,7 +32,7 @@ function FeedPosts() {
         })}
       {!isLoading &&
         posts.length > 0 &&
-        posts.map((post) => <FeedPost post={post} key={post.key} />)}
+        posts.map((post) => <FeedPost post={post} key={post.id} />)}
       {!isLoading && posts.length === 0 && (
         <>
           <Text fontSize={"md"} color={"red.400"} textAlign={"center"}>
